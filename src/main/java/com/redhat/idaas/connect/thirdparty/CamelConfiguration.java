@@ -16,7 +16,7 @@
  */
 package com.redhat.idaas.connect.thirdparty;
 
-import javax.jms.ConnectionFactory;
+//import javax.jms.ConnectionFactory;
 
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jms.connection.JmsTransactionManager;
+//import org.springframework.jms.connection.JmsTransactionManager;
 import org.springframework.stereotype.Component;
 
 /*
