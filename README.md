@@ -8,18 +8,19 @@ plus dozens of others are supported.
 
 This solution contains three supporting directories. The intent of these artifacts to enable
 resources to work locally: <br/>
-1. platform-addons: needed software to run locally. This currently contains amq-streams-1.5 (which is the upstream of Kafka 2.5)<br/>
-2. platform-scripts: support running kafka, creating/listing and deleting topics needed for this solution
++ platform-scripts: support running kafka, creating/listing and deleting topics needed for this solution
 and also building and packaging the solution as well. All the scripts are named to describe their capabilities <br/>
-3. platform-testdata: sample transactions to leverage for using the platform. 
++ platform-testdata: sample transactions to leverage for using the platform. 
 
-## Scenario: Integration 
+# Scenario(s): Kafka Integration 
 This repository follows a very common general implementation. The only connector currently in this code
 base is a Kafka topic. The key sceanrio this can demonstrate is data being processed from a data science 
 kafka topic.
 
-### Integration Data Flow Steps
- 
+## Integration Data Flow Steps
+
+
+
 1. The Kafka client connects to a particular broker and topic and checks if there is any data to process. 
 2. If there is data it will audit the transaction processing 
 3. The transaction will be routed for processing within iDAAS 
