@@ -8,6 +8,7 @@ plus dozens of others are supported.
 ## Add-Ons
 This solution contains three supporting directories. The intent of these artifacts to enable
 resources to work locally: <br/>
++ platform-ddl: DDL usecd within this accelerator (MySQL 8 based).
 + platform-scripts: support running kafka, creating/listing and deleting topics needed for this solution
 and also building and packaging the solution as well. All the scripts are named to describe their capabilities <br/>
 + platform-testdata: sample transactions to leverage for using the platform. 
