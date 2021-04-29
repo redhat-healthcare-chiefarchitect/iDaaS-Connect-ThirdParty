@@ -77,46 +77,27 @@ It is possible to overwrite configuration by:
 
 Supported properties include:
 ```properties
-#logging.config=classpath:logback.xml
-
-# the options from org.apache.camel.spring.boot.CamelConfigurationProperties can be configured here
-camel.springboot.name=iDaaS-KIC
-# lets listen on all ports to ensure we can be invoked from the pod IP
-server.address=0.0.0.0
-management.address=0.0.0.0
-# lets use a different management port in case you need to listen to HTTP requests on 8080
-management.port=8081
 # Server - Internal
-server.port=9970
-# disable all management enpoints except health
-endpoints.enabled = false
-endpoints.health.enabled = true
-spring.main.web-application-type=none
-camel.springboot.main-run-controller=true
-
-# Kafka Details
-idaas.kafkaBrokers=localhost:9092
-idaas.kafkaTopicName=opsmgmt_platformtransactions
-# Audit Directory Location
-idaas.storeInFs=true
-idaas.auditDir=audit
-# Relational Database Detail
-idaas.storeInDb=true
-# Setting the createDbTable=true will try to autocreate a table
-# code is located in DataSourceConfiguration.java
-idaas.createDbTable=false
-# Postgres
-#idaas.dbDriverClassName=org.postgresql.Driver
-#idaas.dbUrl=jdbc:postgresql://localhost:5432/idaas_kic
-#idaas.dbPassword=Developer123
-#idaas.dbUsername=postgres
-#idaas.dbTableName=insight
-# MySQL
-idaas.dbDriverClassName=com.mysql.cj.jdbc.Driver
-idaas.dbUrl=jdbc:mysql://localhost:3306/kic?useLegacyDatetimeCode=false&serverTimezone=GMT
-idaas.dbPassword=Developer123
-idaas.dbUsername=root
-idaas.dbTableName=insight
+server.host=9983
+# Kafka
+kafkaBrokers=localhost:9092
+# Reporting Directory and File Name
+#mandatory.reporting.directory=/MandatoryReporting
+mandatory.reporting.directory=src/data/MandatoryReporting
+mandatory.reporting.file=ReportingExample.csv
+# Covid Directory and File Ext
+covid.reporting.directory=src/data/CovidData
+covid.reporting.extension=*.csv
+# Reseach Data Directory and File Ext
+research.data.directory=src/data/ResearchData
+covid.reporting.extension=*.csv
+# JDBC Database
+spring.datasource.url=jdbc:mysql://localhost/idaas
+                     #jdbc:postgresql://localhost:5432/idaas
+spring.datasource.username=idaas
+spring.datasource.password=@idaas123
+#spring.database.driver-class-name=com.mysql.cj.jdbc.Driver
+#org.postgresql.Driver
 ```
 
 ### Running the App: Maven
