@@ -36,25 +36,107 @@ base is a Kafka topic. The key sceanrio this can demonstrate is data being proce
 kafka topic.
 
 ## Integration Data Flow Steps
-
-
-
 1. The Kafka client connects to a particular broker and topic and checks if there is any data to process. 
 2. If there is data it will audit the transaction processing 
-3. The transaction will be routed for processing within iDAAS 
+3. The transaction will be routed for processing within iDAAS KIC
     
-## Builds
-This section will cover both local and automated builds.
+# Start The Engine!!!
+This section covers the running of the solution. There are several options to start the Engine Up!!!
 
-### Local Builds
-Within the code base you can find the local build commands in the /platform-scripts directory
-1.  Run the build-solution.sh script
-It will run the maven commands to build and then package up the solution. The package will use the usual settings
-in the pom.xml file. It pulls the version and concatenates the version to the output jar it builds.
-Additionally, there is a copy statement to remove any specific version, so it outputs idaas-connect-hl7.jar
+## Step 1: Kafka Server To Connect To
+In order for ANY processing to occur you must have a Kafka server running that this accelerator is configured to connect to.
+Please see the following files we have included to try and help: <br/>
+[Kafka](https://github.com/RedHat-Healthcare/iDaaS-Demos/blob/master/Kafka.md)<br/>
+[KafkaWindows](https://github.com/RedHat-Healthcare/iDaaS-Demos/blob/master/KafkaWindows.md)<br/>
 
-### Automated Builds
-Automated Builds are going to be done in Azure Pipelines
+## Step 2: Running the App: Maven or Code Editor
+This section covers how to get the application started.
+
+### Design Pattern/Accelerator Configuration
+All iDaaS Design Pattern/Accelelrators have application.properties files to enable some level of reusability of code and simplfying configurational enhancements.<br/>
+In order to run multiple iDaaS integration applications we had to ensure the internal http ports that
+the application uses. In order to do this we MUST set the server.port property otherwise it defaults to port 8080 and ANY additional
+components will fail to start. iDaaS Connect HL7 uses 9980. You can change this, but you will have to ensure other applications are not
+using the port you specify.
+
+```properties
+server.port=9980
+```
+Once built you can run the solution by executing `./platform-scripts/start-solution.sh`.
+The script will startup Kafka and iDAAS server.
+
+Alternatively, if you have a running instance of Kafka, you can start a solution with:
+`./platform-scripts/start-solution-with-kafka-brokers.sh --idaas.kafkaBrokers=host1:port1,host2:port2`.
+The script will startup iDAAS server.
+
+It is possible to overwrite configuration by:
+1. Providing parameters via command line e.g.
+`./start-solution.sh --idaas.adtPort=10009`
+2. Creating an application.properties next to the idaas-connect-hl7.jar in the target directory
+3. Creating a properties file in a custom location `./start-solution.sh --spring.config.location=file:./config/application.properties`
+
+Supported properties include:
+```properties
+#logging.config=classpath:logback.xml
+
+# the options from org.apache.camel.spring.boot.CamelConfigurationProperties can be configured here
+camel.springboot.name=iDaaS-KIC
+# lets listen on all ports to ensure we can be invoked from the pod IP
+server.address=0.0.0.0
+management.address=0.0.0.0
+# lets use a different management port in case you need to listen to HTTP requests on 8080
+management.port=8081
+# Server - Internal
+server.port=9970
+# disable all management enpoints except health
+endpoints.enabled = false
+endpoints.health.enabled = true
+spring.main.web-application-type=none
+camel.springboot.main-run-controller=true
+
+# Kafka Details
+idaas.kafkaBrokers=localhost:9092
+idaas.kafkaTopicName=opsmgmt_platformtransactions
+# Audit Directory Location
+idaas.storeInFs=true
+idaas.auditDir=audit
+# Relational Database Detail
+idaas.storeInDb=true
+# Setting the createDbTable=true will try to autocreate a table
+# code is located in DataSourceConfiguration.java
+idaas.createDbTable=false
+# Postgres
+#idaas.dbDriverClassName=org.postgresql.Driver
+#idaas.dbUrl=jdbc:postgresql://localhost:5432/idaas_kic
+#idaas.dbPassword=Developer123
+#idaas.dbUsername=postgres
+#idaas.dbTableName=insight
+# MySQL
+idaas.dbDriverClassName=com.mysql.cj.jdbc.Driver
+idaas.dbUrl=jdbc:mysql://localhost:3306/kic?useLegacyDatetimeCode=false&serverTimezone=GMT
+idaas.dbPassword=Developer123
+idaas.dbUsername=root
+idaas.dbTableName=insight
+```
+
+### Running the App: Maven
+You can use Maven from the command line, you would need to go the specific directory where this code exists and has a pom.xml and then run the
+command: mvn clean install
+
+### Running the App: From Your Code Editor/IDE
+You can right click on Application.java file and select Run in the src directory.
+
+### Running the App from Command Line
+You will need to have built the application into a jar.
+
+1. You download the code
+2. You build the code into a jar
+3. Move the application.properties file from the \src\main\resources to where you would like it or just remember the location as it
+it will be needed later
+4. Make sure you have a Kafka instance up and running to process data with
+5. Go to a command line and execute java -jar <jarlocation>/<jarname.jar> --spring.config.location=file: ./<directory>/application.properties`
+
+Happy using and coding....
 
 ## Ongoing Enhancements
 We maintain all enhancements within the Git Hub portal under the 
