@@ -7,7 +7,7 @@
 
     <groupId>io.connectedhealth_idaas.thirdparty</groupId>
     <artifactId>idaas-connect-thirdparty</artifactId>
-    <version>2020.04</version>
+    <version>2021.04</version>
     <name>iDAAS Connect - Third Party </name>
 
     <properties>
@@ -68,6 +68,11 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-pdf</artifactId>
+        </dependency>
+        <!-- CSV -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-bindy-starter</artifactId>
         </dependency>
         <!-- XML Parsing -->
         <dependency>
