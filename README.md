@@ -1,3 +1,5 @@
+We are currently working thtough some issues with errors preventing Camel from running as a SpringBoot application. The community is working on it and we apologize for the inconvenience. Please feel free to look at https://github.com/RedHat-Healthcare/iDaaS-Connect. This solution upstream continues to run.
+
 # iDAAS-Connect-ThirdParty
 This is the upstream community for or RedHat Healthcare's <a href="https://github.com/RedHat-Healthcare/iDaaS-Connect/tree/master/iDaaS-Connect-ThirdParty" target="_blank">iDaaS Connect ThirdParty</a>.<br/>
 iDAAS has several key components that provide many capabilities. iDAAS Connect is intended ONLY
